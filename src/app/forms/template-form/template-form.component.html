@@ -1,0 +1,118 @@
+<div class="d-flex justify-content-center">
+    <div class="card">
+        <legend class="text-center header">Package delivery</legend>
+        <form (ngSubmit)="saveDeliveryForm()" #deliveryForm="ngForm" class="text-center m-3">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="inputEmail">Email</label>
+                    <input 
+                        type="email" 
+                        class="form-control" 
+                        id="inputEmail" 
+                        required 
+                        [(ngModel)]="customer.email" 
+                        placeholder="John.Doe@dotnetlab.eu" 
+                        minlength="5" 
+                        name="email" 
+                        #customerEmail="ngModel" 
+                        [ngClass]="{'is-invalid': customerEmail.touched && !customerEmail.valid}" />
+                    <div *ngIf="customerEmail.errors" class="alert alert-danger">
+                        Enter a correct Email address
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputFirstName">First name</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="inputFirstName" 
+                        required 
+                        [(ngModel)]="customer.firstName" 
+                        placeholder="John" 
+                        name="firstName" 
+                        #customerFirstName="ngModel" 
+                        [ngClass]="{'is-invalid': customerFirstName.touched && !customerFirstName.valid}" />
+                    <div *ngIf="customerFirstName.errors" class="alert alert-danger">
+                        Enter a first name
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputLastName">Last name</label> 
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="inputLastName" 
+                        required 
+                        [(ngModel)]="customer.lastName" 
+                        placeholder="Doe" 
+                        name="lastName" 
+                        #customerLastName="ngModel" 
+                        [ngClass]="{'is-invalid': customerLastName.touched && !customerLastName.valid}" /> 
+                    <div *ngIf="customerLastName.errors" class="alert alert-danger"> 
+                        Enter a last name
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputStreet">Street</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="inputStreet" 
+                        required 
+                        [(ngModel)]="customer.street" 
+                        placeholder="Gravin de Merodestraat" 
+                        name="street" 
+                        #customerStreet="ngModel" 
+                        [ngClass]="{'is-invalid': customerStreet.touched && !customerStreet.valid}" /> 
+                    <div *ngIf="customerStreet.errors" class="alert alert-danger"> 
+                        Enter a correct street name 
+                    </div> 
+                </div>
+                <div class="form-group col-md-3"> 
+                    <label for="inputStreetNumber">Street #</label> 
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="inputStreetNumber" 
+                        required 
+                        [(ngModel)]="customer.streetNumber" 
+                        placeholder="132" 
+                        name="streetNumber" 
+                        #customerStreetNumber="ngModel" 
+                        [ngClass]="{'is-invalid': customerStreetNumber.touched && !customerStreetNumber.valid}" /> 
+                    <div *ngIf="customerStreetNumber.errors" class="alert alert-danger"> 
+                        Enter a correct street number 
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputCountryCode">Country code</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="inputCountryCode" 
+                        required [(ngModel)]="customer.countryCode" 
+                        placeholder="BE" 
+                        name="countryCode" 
+                        #customerCountryCode="ngModel" 
+                        pattern="[A-Za-z]{2}" 
+                        [ngClass]=" {'is-invalid': customerCountryCode.touched && !customerCountryCode.valid}" />
+                    <div *ngIf="customerCountryCode.errors?.required" class="alert alert-danger"> 
+                        Enter a country code. 
+                    </div>
+                    <div *ngIf="customerCountryCode.errors?.pattern" class="text-danger"> 
+                        Enter a correct 2 char country code. 
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!deliveryForm.valid" class="alert alert-danger">
+                This form contains 1 or more errors
+            </div>
+            <button [disabled]="!deliveryForm.valid" type="submit" class="btn btn-primary">Send package</button>
+        </form>
+    </div>
+</div>
+<h5>{{ deliveryForm.status }}</h5>

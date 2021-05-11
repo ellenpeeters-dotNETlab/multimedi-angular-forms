@@ -1,0 +1,171 @@
+<div class="d-flex justify-content-center"> 
+    <div class="card"> 
+        <legend class="text-center header">Package delivery</legend>
+        <form (ngSubmit)="saveDeliveryForm()" [formGroup]="deliveryForm" class="text-center m-3 form-width">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputFirstName">First name</label>
+                    <input 
+                        type="text"
+                        class="form-control"
+                        id="inputFirstName"
+                        placeholder="John"
+                        formControlName="firstName" />
+                    <div *ngIf="deliveryForm.get('firstName').errors?.required" class="text-danger">
+                        First name is required. 
+                    </div> 
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputLastName">Last name</label>
+                    <input 
+                        type="text"
+                        class="form-control"
+                        id="inputLastName"
+                        placeholder="Doe"
+                        formControlName="lastName" />
+                    <div *ngIf="deliveryForm.get('lastName').errors?.required" class="text-danger">
+                       Last name is required. 
+                    </div> 
+                </div>
+            </div>
+            <div class="form-row"> 
+                <div class="form-group col-md-6"> 
+                    <label for="inputStreet">Street</label> 
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="inputStreet" 
+                        placeholder="Gravin de Merodestraat" 
+                        formControlName="street" /> 
+                    <div *ngIf="deliveryForm.get('street').errors?.required" class="text-danger">
+                        Street is required. 
+                    </div> 
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputStreetNumber">Street #</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="inputStreetNumber" 
+                        placeholder="132" 
+                        formControlName="streetNumber" />
+                    <div *ngIf="deliveryForm.get('streetNumber').errors?.required" class="text-danger">
+                        Street number is required. 
+                    </div> 
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZipCode">Zipcode</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="inputZipcode" 
+                        placeholder="1234" 
+                        formControlName="zipCode" />
+                    <div *ngIf="deliveryForm.get('zipCode').errors?.required" class="text-danger"> 
+                        Zip code is required
+                    </div>
+                    <div *ngIf="deliveryForm.get('zipCode').errors?.minlength" class="text-danger"> 
+                        The zip code must be 4 characters long. 
+                    </div> 
+                    <div *ngIf="deliveryForm.get('zipCode').errors?.maxlength" class="text-danger"> 
+                        The zip code must be 4 characters long. 
+                    </div> 
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputCountryCode">Country code</label> 
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="inputCountryCode"
+                        placeholder="32"
+                        formControlName="countryCode" />
+                    <div *ngIf="deliveryForm.get('countryCode').errors?.required" class="text-danger">
+                        Country code is required. 
+                    </div> 
+                    <div *ngIf="deliveryForm.get('countryCode').errors?.LengthOfNumberNotCorrect" class="text-danger"> 
+                        The country code must be at least 2 characters long and must be less than 4 characters. 
+                    </div> 
+                </div>
+            </div>
+            <div class="d-inline-flex" id="keepNotifiedForPackageDelivery"> 
+                <label for="inputkeepNotified" class="mr-3">I want to receive updates regarding the package.</label> 
+                <input 
+                    type="checkbox"
+                    class="m-auto" 
+                    id="inputkeepNotified"
+                    (change)="updatePackageTrace($event)"
+                    formControlName="keepNotified" />
+            </div>
+            <div *ngIf="deliveryForm.get('keepNotified').value === true" id="notifyMe"> 
+                <div class="d-inline-flex" id="notifyMeMedium">
+                    <label class="form-check-label mr-3">Keep me notified by:</label> 
+                    <div> 
+                        <input
+                            type="radio" 
+                            id="inputEmailMedium" 
+                            class="m-auto" 
+                            formControlName="notifyMedium" 
+                            (change)="updateNotifyMedium(notifyMedium.EMAIL)" 
+                            [value]="notifyMedium.EMAIL" 
+                            checked /> 
+                        <label class="ml-2 mr-2" for="inputEmailMedium">Email</label> 
+                    </div>
+                    <div>
+                        <input 
+                            type="radio" 
+                            id="inputPhoneMedium" 
+                            class="m-auto" 
+                            formControlName="notifyMedium" 
+                            (change)="updateNotifyMedium(notifyMedium.PHONE)" 
+                            [value]="notifyMedium.PHONE" /> 
+                        <label class="ml-2 mr-2" for="inputPhoneMedium">Phone</label> 
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail">Email</label>
+                        <input 
+                            type="email"
+                            class="form-control"
+                            id="inputEmail"
+                            placeholder="John.Doe@dotnetlab.eu"
+                            formControlName="email" />
+                        <div *ngIf="deliveryForm.get('email').errors?.required" class="text-danger">
+                            Email is required. 
+                        </div> 
+                        <div *ngIf="deliveryForm.get('email').errors?.minlength" class="text-danger"> 
+                            The email must be at least 5 characters long. 
+                        </div> 
+                        <div *ngIf="deliveryForm.get('email').errors?.email" class="text-danger"> 
+                            The email is not valid.
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPhoneNumber">Phone</label>
+                        <input
+                            type="phone" 
+                            class="form-control" 
+                            id="inputPhoneNumber" 
+                            placeholder="+3216359370" 
+                            formControlName="phoneNumber" /> 
+                        <div *ngIf="deliveryForm.get('phoneNumber').errors?.required" class="text-danger"> 
+                            Phone number is required
+                        </div>
+                        <div *ngIf="deliveryForm.get('phoneNumber').errors?.minlength" class="text-danger"> 
+                            The phone number must be at least 5 characters long. 
+                        </div> 
+                        <div *ngIf="deliveryForm.get('phoneNumber').errors?.maxlength" class="text-danger"> 
+                            The phone number must be less then 13 characters long. 
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!deliveryForm.valid" class="alert alert-danger"> 
+                This form contains 1 or more errors 
+            </div>
+            <div class="col-md-12 text-center"> 
+                <button type="submit" [disabled]="!deliveryForm.valid" class="btn btn-primary w-50">Send package</button> 
+            </div>
+        </form>
+    </div>
+</div>
